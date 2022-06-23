@@ -17,7 +17,7 @@ gerenciador_arquivo = Gerenciador()
 def processa_mensagem(mensagem, coneccao, cliente):
     mensagem_decodificada = mensagem.decode()
     mensagem_decodificada = mensagem_decodificada.split()
-    if mensagem_decodificada[0] == "download" or mensagem_decodificada[0] == "read":
+    if mensagem_decodificada[0] == "DOWNLOAD" or mensagem_decodificada[0] == "READ":
         nome_arquivo = "".join(mensagem_decodificada[1:])
         try:
             conteudo_arquivo = gerenciador_arquivo.ler_arquivo(nome_arquivo)
@@ -26,7 +26,7 @@ def processa_mensagem(mensagem, coneccao, cliente):
         except ArquivoError as error:
             coneccao.send(str.encode("404"))
 
-    elif mensagem_decodificada[0] == "write":
+    elif mensagem_decodificada[0] == "WRITE":
         nome_arquivo = "".join(mensagem_decodificada[1])
         dados = " ".join(mensagem_decodificada[2:])
         try:
@@ -36,14 +36,14 @@ def processa_mensagem(mensagem, coneccao, cliente):
         except ArquivoError as error:
             coneccao.send(str.encode(error))
 
-    elif mensagem_decodificada[0] == "create":
+    elif mensagem_decodificada[0] == "CREATE":
         nome_arquivo = ''.join(mensagem_decodificada[1])
         try:
             gerenciador_arquivo.criar_arquivo(nome_arquivo)
             coneccao.send(str.encode("ARQUIVO_CRIADO " + nome_arquivo))
 
         except ArquivoError as error:
-            coneccao.send(str.encode("301"))
+            coneccao.send(str.encode("444"))
 
 
 def processa_cliente(con, cliente):
@@ -66,5 +66,13 @@ while True:
 
 
 sock.close()
+
+
+
+
+
+
+
+
 
 
