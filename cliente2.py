@@ -1,6 +1,11 @@
 import socket
 import sys
 
+import funcoes_exibir
+
+funcoes_exibir.exibir_professores()
+funcoes_exibir.exibir_alunos()
+
 HOST = 'localhost'  # Endereço IP do Servidor
 PORT = 40000        # Porta em que o cliente escuta
 TAM_MSG = 1024
@@ -8,7 +13,7 @@ TAM_MSG = 1024
 lista_de_erros = {        # Lista de erros possíveis
     "404": "Arquivo não existe",
     "444": "Arquivo já existe",
-    "406": "Comando incompleto - Digite o nome do arquivo",
+    "406": "Comando incompleto",
     "409": "campo vazio"
 }
 
@@ -32,6 +37,7 @@ if len(sys.argv) > 1:  # Pega o endereço IP do servidor digitado pelo cliente
 serv = (HOST, PORT)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # Definindo o socket como TCP stream    
 sock.connect(serv)  #Conectando com o socket
+
 
 
 while True:    # Menu de escolhas do usuário
